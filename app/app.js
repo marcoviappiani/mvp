@@ -7,4 +7,8 @@ marcoApp.controller('QuestionCtrl', ['$scope', function($scope){
   $scope.option3 = 'John';
   $scope.option4 = 'Tom';
 
+
+  $scope.choose = function(selection) {
+    $scope.selection = selection;
+  }
 }]);

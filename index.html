@@ -7,11 +7,13 @@
 <body ng-app ="marcoApp">
   <div class="question" ng-controller="QuestionCtrl">
     <p>{{question}}</p>
-    <button>{{option1}}</button>
-    <button>{{option2}}</button>
-    <button>{{option3}}</button>
-    <button>{{option4}}</button>
+    <button ng-click="choose(option1)">{{option1}}</button>
+    <button ng-click="choose(option2)">{{option2}}</button>
+    <button ng-click="choose(option3)">{{option3}}</button>
+    <button ng-click="choose(option4)">{{option4}}</button>
+    <span>{{selection}}</span>
   </div>
+  
 
 
   <script src="app/app.js"></script>
