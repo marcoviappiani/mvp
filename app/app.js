@@ -1,6 +1,6 @@
 var marcoApp = angular.module('marcoApp',[]);
 
-marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($scope, QuestionGenerator){
+marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', 'PeopleGenerator', function($scope, QuestionGenerator, PeopleGenerator){
 
   $scope.question = QuestionGenerator.generateQuestion(); 
   // console.log($scope.question);
@@ -20,6 +20,36 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($sc
 }]);
 
 
+
+marcoApp.factory('PeopleGenerator', function() {
+  var allPossiblePeople = [
+    ['Marco', 'Marcoimage'],
+    ['Tom', 'Tomimage'],
+    ['John', 'Johnimage'],
+    ['Bob', 'Bobimage'],
+    ['Carl', 'Carlimage'],
+    ['Tim', 'Timimage'],
+    ['Fred', 'Fredimage'],
+    ['Fred', 'AnotherFredimage']
+  ];
+
+  var generateList = function() {
+    return _.shuffle(allPossiblePeople);
+  };
+
+  var uniqueNames = function() {
+    return _.uniq(_.map(allPossiblePeople, function(person){
+      return person[0];
+    }));
+  };
+
+  return {
+    generateList: generateList,
+    uniqueNames: uniqueNames
+  };
+});
+
+
 marcoApp.factory('QuestionGenerator',function(){
   var optionNum = 4;
 
@@ -37,7 +67,7 @@ marcoApp.factory('QuestionGenerator',function(){
   };
 
   return {  
-    generateQuestion: generateQuestion
+    generateQuestion: generateQuestion,
   };
 
 });
