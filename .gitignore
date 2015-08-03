@@ -33,3 +33,9 @@ bower_components/
 .floobit
 .floo
 .flooignore
+
+# OS generated files #
+######################
+.DS_Store
+
+

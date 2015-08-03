@@ -1,0 +1,20 @@
+{
+  "name": "marcowho",
+  "version": "0.0.0",
+  "homepage": "https://github.com/marcoviappiani/2015-06-mvp",
+  "authors": [
+    "Marco Viappiani <marco.viappiani@gmail.com>"
+  ],
+  "description": "marcowho game",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3"
+  }
+}
