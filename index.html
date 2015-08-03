@@ -10,8 +10,9 @@
   <div class="question" ng-controller="QuestionCtrl">
     <p>{{question.solution.image}}</p>
     <button ng-repeat="opt in question.options" ng-click="choose(opt)" ng-model="opt">{{opt}}</button>
-    <span>{{selection}}</span>
-    <span>{{isCorrect}}</span>
+    <p>selection: {{selection}}</p>
+    <p>answer: {{isCorrect}}</p>
+    <p>gameover: {{question.gameOver}}</p>
     <!-- <p>{{ question.options}}</p> -->
   </div>
 

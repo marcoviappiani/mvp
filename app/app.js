@@ -82,11 +82,13 @@ marcoApp.factory('QuestionGenerator', ['PeopleGenerator', function(PeopleGenerat
     var question = {};
 
     if(questions) {
+      question.gameOver = false;
       question.solution = questions.pop();
       question.options = generateOptions(question.solution.name);  //['Marco', 'Bob', 'John', 'Tom']
       console.log(question);
       return question;
     } else {
+      question.gameOver = true;
       console.log('ran out of questions');
       throw err;
     }
