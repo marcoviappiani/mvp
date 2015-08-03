@@ -1,13 +1,13 @@
 var marcoApp = angular.module('marcoApp',[]);
 
-marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', 'PeopleGenerator', function($scope, QuestionGenerator, PeopleGenerator){
+marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($scope, QuestionGenerator){
 
   $scope.question = QuestionGenerator.generateQuestion(); 
   // console.log($scope.question);
 
   $scope.choose = function(selection) {
     $scope.selection = selection;
-    $scope.isCorrect = $scope.selection === $scope.question.solution;
+    $scope.isCorrect = $scope.selection === $scope.question.solution.name;
   }
 
   // $scope.question = 'placeholder for picture of Marco';  
@@ -23,14 +23,14 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', 'PeopleGener
 
 marcoApp.factory('PeopleGenerator', function() {
   var allPossiblePeople = [
-    ['Marco', 'Marcoimage'],
-    ['Tom', 'Tomimage'],
-    ['John', 'Johnimage'],
-    ['Bob', 'Bobimage'],
-    ['Carl', 'Carlimage'],
-    ['Tim', 'Timimage'],
-    ['Fred', 'Fredimage'],
-    ['Fred', 'AnotherFredimage']
+    {name: 'Marco', image: 'Marcoimage'},
+    {name: 'Tom', image: 'Tomimage'},
+    {name: 'John', image: 'Johnimage'},
+    {name: 'Bob', image: 'Bobimage'},
+    {name: 'Carl', image: 'Carlimage'},
+    {name: 'Tim', image: 'Timimage'},
+    {name: 'Fred', image: 'Fredimage'},
+    {name: 'Fred', image: 'AnotherFredimage'}
   ];
 
   var generateList = function() {
@@ -39,7 +39,7 @@ marcoApp.factory('PeopleGenerator', function() {
 
   var uniqueNames = function() {
     return _.uniq(_.map(allPossiblePeople, function(person){
-      return person[0];
+      return person.name;
     }));
   };
 
@@ -50,25 +50,52 @@ marcoApp.factory('PeopleGenerator', function() {
 });
 
 
-marcoApp.factory('QuestionGenerator',function(){
-  var optionNum = 4;
+marcoApp.factory('QuestionGenerator', ['PeopleGenerator', function(PeopleGenerator){
+
+  var questions = PeopleGenerator.generateList();
+  var uniqueNames = PeopleGenerator.uniqueNames();
+
+  var generateOptions = function(name) {
+    var optionsNum = 4;
+    var i;
+    var options = [];
+    var currOption;
+    var solutionPosition = _.random(optionsNum - 1); //here is where we place the position
+
+    //fill Options
+    while(options.length < optionsNum) {
+      //check if we need to add the solution
+      if(options.length === solutionPosition) {
+        options.push(name);
+      } else {
+        i =_.random(uniqueNames.length - 1);
+        currOption = uniqueNames[i];
+        if(currOption !== name && _.indexOf(options,currOption) === -1) {
+          options.push(currOption);
+        }
+      }
+    }
+    return options;
+  };
 
   var generateQuestion = function() {
     var question = {};
-    question.options = ['Marco', 'Bob', 'John', 'Tom'];
-    question.image = 'placeholder for picture of Marco';
-    question.solution = 'Marco';
 
-    // question.choose = function(selection) {
-    //   return question.solution === selection;
-    // };
+    if(questions) {
+      question.solution = questions.pop();
+      question.options = generateOptions(question.solution.name);  //['Marco', 'Bob', 'John', 'Tom']
+      console.log(question);
+      return question;
+    } else {
+      console.log('ran out of questions');
+      throw err;
+    }
 
-    return question;
   };
 
   return {  
     generateQuestion: generateQuestion,
   };
 
-});
+}]);
 

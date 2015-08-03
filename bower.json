@@ -16,6 +16,7 @@
   ],
   "dependencies": {
     "angular": "~1.4.3",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "angular-underscore-module": "~1.0.1"
   }
 }
