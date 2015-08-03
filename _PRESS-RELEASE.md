@@ -18,27 +18,41 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  'Marco...who?' 
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  The game for people who struggle to remember names.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  If you've recently experienced a situation where you couldn't remember someone's name, this game is for you. This product 
+  saves you from awkward social situations by giving you a fun game to stick those names into your head. :)
 
 ## Problem ##
   > Describe the problem your product solves.
+  There are social situations where you are introduced to a large group of people at once. This can be a new course, a new job, or even normal day to day life. Most people say that they'd like to remember them faster. 
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  This product offers a game that helps exercise the memory of people's faces and names.
+  The game repeatedly shows a picture of a friend and you need to guess the name. The goal is to guess as many names as possible.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+  The days of not calling persons by name because you can't remember it but are too afraid to ask are over.
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  You login with your facebook account,
+  join a game you've been invited to or create a new one.
+  Start playing!
+  Games can be private (you play alone) or shared (play against a group of friends for the best highscore).
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  I now feel that I actually know the people I work with!
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  start playing at www.marcowho.com
