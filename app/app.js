@@ -10,6 +10,9 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
+    GameHandler.updateScore($scope.isCorrect);
+    $scope.score = GameHandler.getScore();
+
     $scope.question = GameHandler.generateQuestion();
     $scope.gameOver = GameHandler.isGameOver();
   }
@@ -55,15 +58,22 @@ marcoApp.factory('GameGenerator', function() {
 
 
 marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
+  //Game Variable definitions
+  var gameSettings = {
+    optionsNum: 4,
+    scoreIncrement : 1
+  };
 
   var questions;
   var uniqueNames;
   var gameOver;
+  var score;
 
   var newGame = function() {
     questions = GameGenerator.generateList();
     uniqueNames = GameGenerator.uniqueNames();
     gameOver = false;
+    score = 0;
   };
 
   var isGameOver = function() {
@@ -71,14 +81,13 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
   }
 
   var generateOptions = function(name) {
-    var optionsNum = 4;
     var i;
     var options = [];
     var currOption;
-    var solutionPosition = _.random(optionsNum - 1); //here is where we place the position
+    var solutionPosition = _.random(gameSettings.optionsNum - 1); //here is where we place the position
 
     //fill Options
-    while(options.length < optionsNum) {
+    while(options.length < gameSettings.optionsNum) {
       //check if we need to add the solution
       if(options.length === solutionPosition) {
         options.push(name);
@@ -109,10 +118,22 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
     }
   };
 
+  var updateScore = function(answerCorrect){
+    if(answerCorrect) {
+      score += gameSettings.scoreIncrement;
+    }
+  };
+
+  var getScore = function(){
+    return score;
+  };
+
   return {  
     newGame: newGame,
     generateQuestion: generateQuestion,
-    isGameOver: isGameOver
+    isGameOver: isGameOver,
+    updateScore: updateScore,
+    getScore: getScore
   };
 
 }]);
