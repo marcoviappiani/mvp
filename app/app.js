@@ -6,10 +6,12 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
   $scope.question = GameHandler.generateQuestion(); 
   // console.log($scope.question);
 
+
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
     $scope.question = GameHandler.generateQuestion();
+    $scope.gameOver = GameHandler.isGameOver();
   }
 
   // $scope.question = 'placeholder for picture of Marco';  
@@ -56,11 +58,17 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
 
   var questions;
   var uniqueNames;
+  var gameOver;
 
   var newGame = function() {
     questions = GameGenerator.generateList();
     uniqueNames = GameGenerator.uniqueNames();
+    gameOver = false;
   };
+
+  var isGameOver = function() {
+    return gameOver;
+  }
 
   var generateOptions = function(name) {
     var optionsNum = 4;
@@ -96,13 +104,15 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
       return question;
     } else {
       console.log('ran out of questions');
-      return {gameOver: true};
+      gameOver = true;
+      return {};
     }
   };
 
   return {  
     newGame: newGame,
-    generateQuestion: generateQuestion
+    generateQuestion: generateQuestion,
+    isGameOver: isGameOver
   };
 
 }]);
