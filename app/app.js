@@ -5,14 +5,15 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
   GameHandler.newGame();
   $scope.question = GameHandler.generateQuestion(); 
   // console.log($scope.question);
-
-
+  $scope.score = GameHandler.getScore();
+  $scope.gameOver = GameHandler.isGameOver();
+  
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
     GameHandler.updateScore($scope.isCorrect);
-    $scope.score = GameHandler.getScore();
 
+    $scope.score = GameHandler.getScore();
     $scope.question = GameHandler.generateQuestion();
     $scope.gameOver = GameHandler.isGameOver();
   }
