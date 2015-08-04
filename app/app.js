@@ -1,15 +1,15 @@
 var marcoApp = angular.module('marcoApp',[]);
 
-marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($scope, QuestionGenerator){
+marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, GameHandler){
 
-  QuestionGenerator.newGame();
-  $scope.question = QuestionGenerator.generateQuestion(); 
+  GameHandler.newGame();
+  $scope.question = GameHandler.generateQuestion(); 
   // console.log($scope.question);
 
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
-    $scope.question = QuestionGenerator.generateQuestion();
+    $scope.question = GameHandler.generateQuestion();
   }
 
   // $scope.question = 'placeholder for picture of Marco';  
@@ -52,7 +52,7 @@ marcoApp.factory('GameGenerator', function() {
 });
 
 
-marcoApp.factory('QuestionGenerator', ['GameGenerator', function(GameGenerator){
+marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
 
   var questions;
   var uniqueNames;
