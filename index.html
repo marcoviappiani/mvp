@@ -15,11 +15,18 @@
  
 
 
-  <title>Marco... Who?</title>
+<title>Marco... Who? - The Memory Game</title>
 </head>
 <body ng-app ="marcoApp">
   <div class="game-container container" ng-controller="GameCtrl">
-    <div class="game" ng-hide="gameOver">
+    <h1>Marco... Who? - The Memory Game</h1>
+    <div ng-hide="gameStarted" class="game-selection">
+      <div class="games-list thumbnail">
+        <img class="game1" ng-click="startGame()" src="{{'assets/img/studentGame.png'}}" alt="image">
+        <img class="game2" src="{{'assets/img/OwnersGame.png'}}" alt="image">
+      </div>
+    </div>
+    <div class="game" ng-show="gameStarted && !gameOver">
       <h2 class="dashboard">
         <span class="score text-left">Score: {{score}}</span>
         <span class="counter pull-right">Time left: {{counter}}</span>
@@ -33,13 +40,9 @@
         </div>
         <!-- <button type="button" class="btn btn-lg btn-primary .btn-block" ng-repeat="opt in question.options" ng-click="choose(opt)" ng-model="opt">{{opt}}</button> -->
       </div>
-      <!-- <p>selection: {{selection}}</p>
-      <p>answer: {{isCorrect}}</p>
-      <p>gameover: {{gameOver}}</p> -->
-      <!-- <p>data: {{data}}</p>
-      <p>data: {{timerData}}</p> -->
+      
     </div>
-    <div class="result" ng-show="gameOver">
+    <div class="result" ng-show="gameOver && gameStarted">
       <h2 class="dashboard">
         <span class="score">Final Score: {{score}}</span>
         <div class="question-image thumbnail">
@@ -47,8 +50,13 @@
         </div>
         <!-- <span class="counter">Time left: {{counter}}</span> -->
       </h2>
-
     </div>
+    <!-- <p>selection: {{selection}}</p>
+    <p>answer: {{isCorrect}}</p>
+    <p>gameover: {{gameOver}}</p>
+    <p>gamestarted: {{gameStarted}}</p>
+    <p>data: {{data}}</p>
+    <p>data: {{timerData}}</p> -->
   </div>
 
   <script src="app/app.js"></script>

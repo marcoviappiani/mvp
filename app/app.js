@@ -2,22 +2,30 @@ var marcoApp = angular.module('marcoApp',[]);
 
 marcoApp.controller('GameCtrl', ['$scope', 'GameHandler', 'TimerFactory', '$interval', function($scope, GameHandler, TimerFactory, $interval){
 
-  GameHandler.newGame();
   // $scope.data = GameHandler.getData();
   // $scope.timerData = TimerFactory.getData()
+  $scope.gameStarted = false;
 
-  $scope.question = GameHandler.generateQuestion(); 
-  $scope.score = GameHandler.getScore();
-  $scope.gameOver = GameHandler.isGameOver();
+  $scope.startGame = function() {
+    GameHandler.newGame();
+    $scope.question = GameHandler.generateQuestion(); 
+    $scope.score = GameHandler.getScore();
+    $scope.gameStarted = true;
+    $scope.gameOver = GameHandler.isGameOver();
 
-  $scope.counter = TimerFactory.getCounter();
-  $interval(function() {
-    $scope.counter = TimerFactory.getCounter(); 
-    if($scope.counter === 0) {
-      GameHandler.endGame();
-      $scope.gameOver = GameHandler.isGameOver();
-    }
-  }, 1000);
+    $scope.counter = TimerFactory.getCounter();
+
+    //this $interval is a hack to fix the fact that $scope doesn't seem to be updating during the interval.
+    // TODO: find the root cause and a better solution
+    $interval(function() {
+      $scope.counter = TimerFactory.getCounter(); 
+      if($scope.counter === 0) {
+        GameHandler.endGame();
+        $scope.gameOver = GameHandler.isGameOver();
+      }
+    }, 1000);
+  };
+
 
   // console.log($scope.question);
 
