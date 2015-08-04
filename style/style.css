@@ -3,5 +3,6 @@ body {
   padding-bottom: 30px;
 }
 
-
-
+.thumbnail img {
+  max-width: 400px;
+}

@@ -3,14 +3,20 @@ var marcoApp = angular.module('marcoApp',[]);
 marcoApp.controller('GameCtrl', ['$scope', 'GameHandler', 'TimerFactory', '$interval', function($scope, GameHandler, TimerFactory, $interval){
 
   GameHandler.newGame();
+  // $scope.data = GameHandler.getData();
+  // $scope.timerData = TimerFactory.getData()
+
   $scope.question = GameHandler.generateQuestion(); 
   $scope.score = GameHandler.getScore();
   $scope.gameOver = GameHandler.isGameOver();
 
   $scope.counter = TimerFactory.getCounter();
-
   $interval(function() {
-    $scope.counter = TimerFactory.getCounter();    
+    $scope.counter = TimerFactory.getCounter(); 
+    if($scope.counter === 0) {
+      GameHandler.endGame();
+      $scope.gameOver = GameHandler.isGameOver();
+    }
   }, 1000);
 
   // console.log($scope.question);
@@ -76,12 +82,21 @@ marcoApp.factory('GameGenerator', function() {
 marcoApp.factory('GameHandler', ['GameGenerator', 'GameSettings', 'TimerFactory', function(GameGenerator,GameSettings, TimerFactory){
   //Game Variable definitions
   var gameSettings = GameSettings;
-  var timer = TimerFactory;
-
   var questions;
   var uniqueNames;
   var gameOver;
   var score;
+
+  //object that groups all data --not really used
+  var getData = function() {
+    return {
+      counter: TimerFactory.getCounter(),
+      questions: questions,
+      uniqueNames: uniqueNames,
+      gameOver: gameOver,
+      score: score
+    };
+  };
 
   var getCounter = function() {
     return TimerFactory.getCounter();
@@ -92,7 +107,7 @@ marcoApp.factory('GameHandler', ['GameGenerator', 'GameSettings', 'TimerFactory'
     uniqueNames = GameGenerator.uniqueNames();
     gameOver = false;
     score = 0;
-    timer.startCounter(function(count) {
+    TimerFactory.startCounter(function(count) {
       if(count ===0) {
         gameOver = true;
         console.log('timer updated');
@@ -102,6 +117,10 @@ marcoApp.factory('GameHandler', ['GameGenerator', 'GameSettings', 'TimerFactory'
 
   var isGameOver = function() {
     return gameOver;
+  }
+
+  var endGame = function() {
+    gameOver = true;
   }
 
   var generateOptions = function(name) {
@@ -155,10 +174,11 @@ marcoApp.factory('GameHandler', ['GameGenerator', 'GameSettings', 'TimerFactory'
     newGame: newGame,
     generateQuestion: generateQuestion,
     isGameOver: isGameOver,
+    endGame: endGame,
     updateScore: updateScore,
     getScore: getScore,
-    timer: timer,
-    getCounter: getCounter
+    getCounter: getCounter,
+    getData: getData
   };
 
 }]);
@@ -171,7 +191,14 @@ marcoApp.factory('TimerFactory',['GameSettings', '$interval', function(GameSetti
   var getCounter = function() {
     console.log('we are into the getCounter');
     return count;
+  };
+
+  var getData = function() {
+    return {
+      count: count
+    };
   }
+
 
   var startCounter = function(callback) {
     
@@ -197,10 +224,10 @@ marcoApp.factory('TimerFactory',['GameSettings', '$interval', function(GameSetti
   };
 
   return {
-    count: count,
     startCounter: startCounter,
     stopCounter: stopCounter,
-    getCounter: getCounter
+    getCounter: getCounter,
+    getData: getData
   };
 
 }]);
@@ -210,7 +237,7 @@ marcoApp.factory('GameSettings', function() {
   return {
     optionsNum: 4,
     scoreIncrement : 1,
-    timerLength: 60,
+    timerLength: 30,
     timerDelay: 1000
   };
 });
