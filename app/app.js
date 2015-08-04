@@ -1,11 +1,18 @@
 var marcoApp = angular.module('marcoApp',[]);
 
-marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, GameHandler){
+marcoApp.controller('GameCtrl', ['$scope', 'GameHandler', 'TimerFactory', '$interval', function($scope, GameHandler, TimerFactory, $interval){
 
   GameHandler.newGame();
   $scope.question = GameHandler.generateQuestion(); 
   $scope.score = GameHandler.getScore();
   $scope.gameOver = GameHandler.isGameOver();
+
+  $scope.counter = TimerFactory.getCounter();
+
+  $interval(function() {
+    $scope.counter = TimerFactory.getCounter();    
+  }, 1000);
+
   // console.log($scope.question);
 
   $scope.choose = function(selection) {
@@ -22,13 +29,14 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
 
 // These will need to be removed if app is ever publisher somewhere
 // loading the flashcard should wait for the image to load (check if any delays)
+//pictures are not all of the same size! need to handle that in some way
 marcoApp.factory('GameGenerator', function() {
   var allPossiblePeople = [
     {name: 'Adam', image: 'assets/img/Adam.jpeg'},
     {name: 'Alex', image: 'assets/img/AlexCast.jpeg'},
     {name: 'Alex', image: 'assets/img/AlexLeo.jpeg'},
     {name: 'Andrew', image: 'assets/img/Andrew.jpeg'},
-    {name: 'Ben', image: 'assets/img/BenB.jpeg'},
+    // {name: 'Ben', image: 'assets/img/BenB.jpeg'},
     {name: 'Brian', image: 'assets/img/Brian.jpeg'},
     {name: 'Chris', image: 'assets/img/Chris.jpeg'},
     {name: 'Cody', image: 'assets/img/Cody.jpeg'},
@@ -65,23 +73,31 @@ marcoApp.factory('GameGenerator', function() {
 });
 
 
-marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
+marcoApp.factory('GameHandler', ['GameGenerator', 'GameSettings', 'TimerFactory', function(GameGenerator,GameSettings, TimerFactory){
   //Game Variable definitions
-  var gameSettings = {
-    optionsNum: 4,
-    scoreIncrement : 1
-  };
+  var gameSettings = GameSettings;
+  var timer = TimerFactory;
 
   var questions;
   var uniqueNames;
   var gameOver;
   var score;
 
+  var getCounter = function() {
+    return TimerFactory.getCounter();
+  };
+
   var newGame = function() {
     questions = GameGenerator.generateList();
     uniqueNames = GameGenerator.uniqueNames();
     gameOver = false;
     score = 0;
+    timer.startCounter(function(count) {
+      if(count ===0) {
+        gameOver = true;
+        console.log('timer updated');
+      }
+    });
   };
 
   var isGameOver = function() {
@@ -114,10 +130,9 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
     var question = {};
 
     if(questions.length >0) {
-      question.gameOver = false;
       question.solution = questions.pop();
       question.options = generateOptions(question.solution.name);  //['Marco', 'Bob', 'John', 'Tom']
-      console.log(question);
+      // console.log(question);
       return question;
     } else {
       console.log('ran out of questions');
@@ -141,8 +156,62 @@ marcoApp.factory('GameHandler', ['GameGenerator', function(GameGenerator){
     generateQuestion: generateQuestion,
     isGameOver: isGameOver,
     updateScore: updateScore,
-    getScore: getScore
+    getScore: getScore,
+    timer: timer,
+    getCounter: getCounter
   };
 
 }]);
+
+marcoApp.factory('TimerFactory',['GameSettings', '$interval', function(GameSettings,$interval){
+  var count = 0;
+  var delay = GameSettings.timerDelay;
+  var timer;
+
+  var getCounter = function() {
+    console.log('we are into the getCounter');
+    return count;
+  }
+
+  var startCounter = function(callback) {
+    
+    var incrementTimer = function() {
+      count--;
+      callback(count);
+      // console.log(callback.toString());
+      console.log(count);
+    };
+
+    if(timer) {
+      $interval.cancel(timer);
+    }
+    count = GameSettings.timerLength;
+    timer = $interval(incrementTimer, delay, count, true);
+  };
+
+
+  var stopCounter = function() {
+    if(timer) {
+      $interval.cancel(timer);
+    }
+  };
+
+  return {
+    count: count,
+    startCounter: startCounter,
+    stopCounter: stopCounter,
+    getCounter: getCounter
+  };
+
+}]);
+
+//Settings used throughout the App
+marcoApp.factory('GameSettings', function() {
+  return {
+    optionsNum: 4,
+    scoreIncrement : 1,
+    timerLength: 60,
+    timerDelay: 1000
+  };
+});
 

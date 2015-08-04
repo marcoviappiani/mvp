@@ -12,15 +12,20 @@
   <script src="bower_components/underscore/underscore-min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
 
+ 
+
 
   <title>Marco... Who?</title>
 </head>
 <body ng-app ="marcoApp">
   <div class="game-container container">
-    <div class="question" ng-controller="QuestionCtrl">
-      <h2 class="score">Score: {{score}}</h2>
+    <div class="game" ng-controller="GameCtrl">
+      <h2 class="dashboard">
+        <span class="counter">Score: {{score}}</span>
+        <span class="score">Time left: {{counter}}</span>
+      </h2>
       <div class="question-image thumbnail">
-        <img src="{{question.solution.image}}" alt="image">
+        <img src="{{question.solution.image || 'assets/img/default2.png'}}" alt="image">
       </div>
       <div class="options btn-group btn-group-justified" role="group" aria-label="..." >
         <div class="btn-group" role="group" ng-repeat="opt in question.options" ng-click="choose(opt)">
