@@ -18,6 +18,7 @@
 <body ng-app ="marcoApp">
   <div class="game-container container">
     <div class="question" ng-controller="QuestionCtrl">
+      <h2 class="score">Score: {{score}}</h2>
       <div class="question-image thumbnail">
         <img src="{{question.solution.image}}" alt="image">
       </div>
@@ -30,7 +31,6 @@
       <p>selection: {{selection}}</p>
       <p>answer: {{isCorrect}}</p>
       <p>gameover: {{gameOver}}</p>
-      <p>Score {{score}}</p>
     </div>
   </div>
 

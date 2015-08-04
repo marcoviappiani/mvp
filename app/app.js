@@ -20,7 +20,8 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
 }]);
 
 
-
+// These will need to be removed if app is ever publisher somewhere
+// loading the flashcard should wait for the image to load (check if any delays)
 marcoApp.factory('GameGenerator', function() {
   var allPossiblePeople = [
     {name: 'Adam', image: 'assets/img/Adam.jpeg'},
