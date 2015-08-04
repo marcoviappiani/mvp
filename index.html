@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="style/style.css">
+
   <script src="bower_components/underscore/underscore-min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
-  
-  <title></title>
+
+
+  <title>Marco... Who?</title>
 </head>
 <body ng-app ="marcoApp">
-  <div class="question" ng-controller="QuestionCtrl">
-    <p>{{question.solution.image}}</p>
-    <button ng-repeat="opt in question.options" ng-click="choose(opt)" ng-model="opt">{{opt}}</button>
-    <p>selection: {{selection}}</p>
-    <p>answer: {{isCorrect}}</p>
-    <p>gameover: {{gameOver}}</p>
-    <p>Score {{score}}</p>
+  <div class="game-container container">
+    <div class="question" ng-controller="QuestionCtrl">
+      <div class="question-image thumbnail">
+        <img src="{{question.solution.image}}" alt="image">
+      </div>
+      <div class="options btn-group btn-group-justified" role="group" aria-label="..." >
+        <div class="btn-group" role="group" ng-repeat="opt in question.options" ng-click="choose(opt)">
+            <button type="button" class="btn btn-lg btn-primary">{{opt}}</button>
+        </div>
+        <!-- <button type="button" class="btn btn-lg btn-primary .btn-block" ng-repeat="opt in question.options" ng-click="choose(opt)" ng-model="opt">{{opt}}</button> -->
+      </div>
+      <p>selection: {{selection}}</p>
+      <p>answer: {{isCorrect}}</p>
+      <p>gameover: {{gameOver}}</p>
+      <p>Score {{score}}</p>
+    </div>
   </div>
 
   <script src="app/app.js"></script>

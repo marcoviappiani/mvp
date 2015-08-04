@@ -23,14 +23,28 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
 
 marcoApp.factory('GameGenerator', function() {
   var allPossiblePeople = [
-    {name: 'Marco', image: 'Marcoimage'},
-    {name: 'Tom', image: 'Tomimage'},
-    {name: 'John', image: 'Johnimage'},
-    {name: 'Bob', image: 'Bobimage'},
-    {name: 'Carl', image: 'Carlimage'},
-    {name: 'Tim', image: 'Timimage'},
-    {name: 'Fred', image: 'Fredimage'},
-    {name: 'Fred', image: 'AnotherFredimage'}
+    {name: 'Adam', image: 'assets/img/Adam.jpeg'},
+    {name: 'Alex', image: 'assets/img/AlexCast.jpeg'},
+    {name: 'Alex', image: 'assets/img/AlexLeo.jpeg'},
+    {name: 'Andrew', image: 'assets/img/Andrew.jpeg'},
+    {name: 'Ben', image: 'assets/img/BenB.jpeg'},
+    {name: 'Brian', image: 'assets/img/Brian.jpeg'},
+    {name: 'Chris', image: 'assets/img/Chris.jpeg'},
+    {name: 'Cody', image: 'assets/img/Cody.jpeg'},
+    {name: 'David', image: 'assets/img/David.jpeg'},
+    {name: 'Fred', image: 'assets/img/Fred.png'},
+    // {name: 'Jennie', image: 'assets/img/Jennie.png'},
+    {name: 'Jonathan', image: 'assets/img/Jonathan.jpeg'},
+    {name: 'Kenneth', image: 'assets/img/Kenneth.jpeg'},
+    {name: 'Kiri', image: 'assets/img/Kiri.jpeg'},
+    {name: 'Lina', image: 'assets/img/Lina.jpeg'},
+    // {name: 'Mack', image: 'assets/img/Mack.jpeg'},
+    {name: 'Marco', image: 'assets/img/Marco.jpeg'},
+    {name: 'Marcus', image: 'assets/img/Marcus.jpeg'},
+    // {name: 'Mark', image: 'assets/img/Mark.png'},
+    {name: 'Nate', image: 'assets/img/Nate.jpeg'},
+    {name: 'Omar', image: 'assets/img/Omar.png'},
+    // {name: 'Rob', image: 'assets/img/RobHayes.jpeg'},
   ];
 
   var generateList = function() {
