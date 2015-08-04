@@ -2,12 +2,14 @@ var marcoApp = angular.module('marcoApp',[]);
 
 marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($scope, QuestionGenerator){
 
+  QuestionGenerator.newGame();
   $scope.question = QuestionGenerator.generateQuestion(); 
   // console.log($scope.question);
 
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
+    $scope.question = QuestionGenerator.generateQuestion();
   }
 
   // $scope.question = 'placeholder for picture of Marco';  
@@ -21,7 +23,7 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'QuestionGenerator', function($sc
 
 
 
-marcoApp.factory('PeopleGenerator', function() {
+marcoApp.factory('GameGenerator', function() {
   var allPossiblePeople = [
     {name: 'Marco', image: 'Marcoimage'},
     {name: 'Tom', image: 'Tomimage'},
@@ -50,10 +52,15 @@ marcoApp.factory('PeopleGenerator', function() {
 });
 
 
-marcoApp.factory('QuestionGenerator', ['PeopleGenerator', function(PeopleGenerator){
+marcoApp.factory('QuestionGenerator', ['GameGenerator', function(GameGenerator){
 
-  var questions = PeopleGenerator.generateList();
-  var uniqueNames = PeopleGenerator.uniqueNames();
+  var questions;
+  var uniqueNames;
+
+  var newGame = function() {
+    questions = GameGenerator.generateList();
+    uniqueNames = GameGenerator.uniqueNames();
+  };
 
   var generateOptions = function(name) {
     var optionsNum = 4;
@@ -81,22 +88,21 @@ marcoApp.factory('QuestionGenerator', ['PeopleGenerator', function(PeopleGenerat
   var generateQuestion = function() {
     var question = {};
 
-    if(questions) {
+    if(questions.length >0) {
       question.gameOver = false;
       question.solution = questions.pop();
       question.options = generateOptions(question.solution.name);  //['Marco', 'Bob', 'John', 'Tom']
       console.log(question);
       return question;
     } else {
-      question.gameOver = true;
       console.log('ran out of questions');
-      throw err;
+      return {gameOver: true};
     }
-
   };
 
   return {  
-    generateQuestion: generateQuestion,
+    newGame: newGame,
+    generateQuestion: generateQuestion
   };
 
 }]);
