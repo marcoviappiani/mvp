@@ -4,10 +4,10 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
 
   GameHandler.newGame();
   $scope.question = GameHandler.generateQuestion(); 
-  // console.log($scope.question);
   $scope.score = GameHandler.getScore();
   $scope.gameOver = GameHandler.isGameOver();
-  
+  // console.log($scope.question);
+
   $scope.choose = function(selection) {
     $scope.selection = selection;
     $scope.isCorrect = $scope.selection === $scope.question.solution.name;
@@ -17,14 +17,6 @@ marcoApp.controller('QuestionCtrl', ['$scope', 'GameHandler', function($scope, G
     $scope.question = GameHandler.generateQuestion();
     $scope.gameOver = GameHandler.isGameOver();
   }
-
-  // $scope.question = 'placeholder for picture of Marco';  
-  // $scope.option1 = 'Marco';
-  // $scope.option2 = 'Bob';
-  // $scope.option3 = 'John';
-  // $scope.option4 = 'Tom';
-  // $scope.solution = 'Marco';
-
 }]);
 
 
