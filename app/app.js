@@ -49,6 +49,7 @@ marcoApp.factory('GameGenerator', function() {
     {name: 'Adam', image: 'assets/img/Adam.jpeg'},
     {name: 'Alex', image: 'assets/img/AlexCast.jpeg'},
     {name: 'Alex', image: 'assets/img/AlexLeo.jpeg'},
+    {name: 'Andres', image: 'assets/img/Andres.png'},
     {name: 'Andrew', image: 'assets/img/Andrew.jpeg'},
     // {name: 'Ben', image: 'assets/img/BenB.jpeg'},
     {name: 'Brian', image: 'assets/img/Brian.jpeg'},
